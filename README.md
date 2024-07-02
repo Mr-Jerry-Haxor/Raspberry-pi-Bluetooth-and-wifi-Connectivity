@@ -2,6 +2,36 @@
 This project is developed to make the Raspberry Pi Bluetooth to auto connect with any devices and  control wifi connectivity 
 
 
+# Pre-quisites
+This python-script uses Bluez, Linux's Bluetooth protocol stack, we'll be using PyBluez, a Python API for accessing the bluetooth resources using the bluez protocol.
+
+Installation
+```
+sudo apt-get install python3-pip python3-dev ipython3
+
+sudo apt-get install bluetooth libbluetooth-dev
+
+sudo apt-get install bluez-utils blueman
+
+sudo apt-get install python3-bluez
+
+sudo apt install snapd
+
+snap install bluez
+
+sudo pip install pybluez
+```
+
+# Edit bluetooth config file 
+You need to run the Bluetooth daemon in 'compatibility' mode. Edit /lib/systemd/system/bluetooth.service and add '-C' after ' <other_data>/bluetoothd'. Reboot.
+
+```
+sudo nano /lib/systemd/system/bluetooth.service
+```
+```
+sudo sdptool add SP
+```
+
 ## To make it auto connect
 
 # created a new file
@@ -23,7 +53,7 @@ User=root
 [Install]
 WantedBy=bluetooth.target
 ```
-# save it and exit :  Ctrl + x and Y
+Once you've added details, save and close the file by pressing CTRL + X, then Y to confirm the changes, and Enter to exit.
 
 
 # create another fiele
