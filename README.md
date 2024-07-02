@@ -32,6 +32,59 @@ sudo nano /lib/systemd/system/bluetooth.service
 sudo sdptool add SP
 ```
 
+## Bluetooth SERVER code
+
+```
+git clone https://github.com/Mr-Jerry-Haxor/Raspberry-pi-Bluetooth-and-wifi-Connectivity.git
+
+cd Raspberry-pi-Bluetooth-and-wifi-Connectivity
+
+sudo cp btserve.py /opt/
+
+```
+# Create the Service File
+Create a systemd service file using a text editor. This file will define how your service should behave.
+```
+sudo nano /etc/systemd/system/btserve.service
+```
+Paste the following content into the file
+```
+[Unit]
+Description=Custom Bluetooth Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=sudo /usr/bin/python3 /opt/btserve.py > /tmp/btserver.log 2>&1 &
+Restart=always
+RestartSec=3
+User=root   
+Group=root  
+
+[Install]
+WantedBy=multi-user.target
+```
+Ensure that your Python script /opt/btserve.py has execute permissions. You can set it with:
+```
+sudo chmod +x /opt/btserve.py
+```
+Reload systemd and Start the Service
+After creating the service file, reload systemd to read the new service file and start the service:
+```
+sudo systemctl daemon-reload
+
+sudo systemctl start btserve
+```
+Enable the Service to Start on Boot
+```
+sudo systemctl enable btserve
+```
+Check the Status
+You can check the status of your service to ensure it's running without errors:
+```
+sudo systemctl status btserve
+```
+
 ## To make it auto connect
 
 # created a new file
@@ -49,6 +102,8 @@ PartOf=bluetooth.service
 [Service]
 Type=simple
 ExecStart=/usr/bin/bt-agent -c DisplayOnly -p /opt/pin
+Restart=always
+RestartSec=3
 User=root
 [Install]
 WantedBy=bluetooth.target
