@@ -123,7 +123,7 @@ class BLEServer:
             self.send_data_to_client(f"Failed to execute command: {e}")
 
     def append_wifi_details_to_wpa_supplicant(self, ssid, password):
-        wifi_config = f'\nnetwork={{ ssid="{ssid}" psk="{password}"}}\n'
+        wifi_config = f'\nnetwork={{\n    ssid="{ssid}"\n    psk="{password}"\n    key_mgmt=WPA-PSK\n}}\n'
         with open("/etc/wpa_supplicant/wpa_supplicant.conf", "a") as file:
             file.write(wifi_config)
         self.logger.info("Wi-Fi details appended to wpa_supplicant.conf.")
