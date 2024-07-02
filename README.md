@@ -13,11 +13,11 @@ sudo apt-get install bluetooth libbluetooth-dev
 
 sudo apt-get install bluez-utils blueman
 
-sudo apt-get install python3-bluez
-
 sudo apt install snapd
 
-snap install bluez
+sudo snap install bluez
+
+sudo apt-get install python3-bluez
 
 sudo pip install pybluez
 ```
@@ -39,13 +39,13 @@ git clone https://github.com/Mr-Jerry-Haxor/Raspberry-pi-Bluetooth-and-wifi-Conn
 
 cd Raspberry-pi-Bluetooth-and-wifi-Connectivity
 
-sudo cp btserve.py /opt/
+sudo cp btserver.py /opt/btserver.py
 
 ```
 # Create the Service File
 Create a systemd service file using a text editor. This file will define how your service should behave.
 ```
-sudo nano /etc/systemd/system/btserve.service
+sudo nano /etc/systemd/system/btserver.service
 ```
 Paste the following content into the file
 ```
@@ -55,7 +55,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=sudo /usr/bin/python3 /opt/btserve.py > /tmp/btserver.log 2>&1 &
+ExecStart=sudo /usr/bin/python3 /opt/btserver.py > /tmp/btserver.log 2>&1 &
 Restart=always
 RestartSec=3
 User=root   
@@ -64,25 +64,25 @@ Group=root
 [Install]
 WantedBy=multi-user.target
 ```
-Ensure that your Python script /opt/btserve.py has execute permissions. You can set it with:
+Ensure that your Python script /opt/btserver.py has execute permissions. You can set it with:
 ```
-sudo chmod +x /opt/btserve.py
+sudo chmod +x /opt/btserver.py
 ```
 Reload systemd and Start the Service
 After creating the service file, reload systemd to read the new service file and start the service:
 ```
 sudo systemctl daemon-reload
 
-sudo systemctl start btserve
+sudo systemctl start btserver
 ```
 Enable the Service to Start on Boot
 ```
-sudo systemctl enable btserve
+sudo systemctl enable btserver
 ```
 Check the Status
 You can check the status of your service to ensure it's running without errors:
 ```
-sudo systemctl status btserve
+sudo systemctl status btserver
 ```
 
 ## To make it auto connect
