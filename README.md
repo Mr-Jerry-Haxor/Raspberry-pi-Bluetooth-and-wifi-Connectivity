@@ -41,7 +41,11 @@ cd Raspberry-pi-Bluetooth-and-wifi-Connectivity
 
 sudo cp btserver.py /opt/btserver.py
 
-sudo mkdir /var/log/btserver/
+sudo mkdir -p /var/log/btserver
+
+sudo touch /var/log/btserver/btserver.log
+
+sudo chmod -R 777 /var/log/btserver
 
 ```
 # Create the Service File
@@ -57,6 +61,7 @@ After=network.target
 
 [Service]
 Type=simple
+ExecStartPre=/bin/mkdir -p /var/log/btserver
 ExecStart=sudo /usr/bin/python3 /opt/btserver.py > /var/log/btserver/btserver.log 2>&1
 Restart=always
 RestartSec=3
