@@ -22,7 +22,7 @@ sudo apt-get install python3-bluez
 sudo pip install pybluez
 ```
 
-# Edit bluetooth config file 
+## Edit bluetooth config file 
 You need to run the Bluetooth daemon in 'compatibility' mode. Edit /lib/systemd/system/bluetooth.service and add '-C' after ' <other_data>/bluetoothd'. Reboot.
 
 ```
@@ -48,7 +48,7 @@ sudo touch /var/log/btserver/btserver.log
 sudo chmod -R 777 /var/log/btserver
 
 ```
-# Create the Service File
+## Create the Service File
 Create a systemd service file using a text editor. This file will define how your service should behave.
 ```
 sudo nano /etc/systemd/system/btserver.service
@@ -92,9 +92,9 @@ You can check the status of your service to ensure it's running without errors:
 sudo systemctl status btserver
 ```
 
-## To make it auto connect
+# To make Raspberry pi bluetooth to Auto connect
 
-# created a another service file
+## created a another service file
 ```
 sudo nano /usr/lib/systemd/system/bt-agent
 ```
@@ -147,4 +147,4 @@ sudo systemctl daemon-reload
 sudo systemctl restart bt-agent
 ```
 
-## now Try to connect to the bluetooth of raspberry , it will connect automatically.
+### now Try to connect to the bluetooth of raspberry , it will connect automatically.
