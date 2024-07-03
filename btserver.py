@@ -118,16 +118,25 @@ class BLEServer:
         try:
             output = subprocess.check_output(cmd, shell=True)
             self.send_data_to_client(output.decode('utf-8'))
+            self.logger.log(logging.INFO, f"Command executed successfully: {cmd}")
+            self.logger.log(logging.INFO, f"Output: {output.decode('utf-8')}")
         except subprocess.CalledProcessError as e:
             self.logger.error(f"Failed to execute command: {e}", exc_info=True)
             self.send_data_to_client(f"Failed to execute command: {e}")
 
     def append_wifi_details_to_wpa_supplicant(self, ssid, password):
-        wifi_config = f'\nnetwork={{\n    ssid="{ssid}"\n    psk="{password}"\n    key_mgmt=WPA-PSK\n}}\n'
-        with open("/etc/wpa_supplicant/wpa_supplicant.conf", "a") as file:
-            file.write(wifi_config)
-        self.logger.info("Wi-Fi details appended to wpa_supplicant.conf.")
-        self.send_data_to_client("Wi-Fi details appended to wpa_supplicant.conf successfully.")
+        try:
+            # Construct the command with ssid and password
+            command = f'sudo nmcli device wifi connect "{ssid}" password "{password}" ifname wlan0'
+            # Execute the command
+            result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            # Log the output
+            self.logger.info(f"Command output: {result.stdout}")
+            self.send_data_to_client(f"Wi-Fi connected successfully to {ssid}.")
+        except subprocess.CalledProcessError as e:
+            # Log the error
+            self.logger.error(f"Command failed: {e.stderr}")
+            self.send_data_to_client("Failed to connect to Wi-Fi.")
 
     def reconfigure_wifi_interface(self):
         try:
