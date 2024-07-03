@@ -41,6 +41,8 @@ cd Raspberry-pi-Bluetooth-and-wifi-Connectivity
 
 sudo cp btserver.py /opt/btserver.py
 
+sudo mkdir /var/log/btserver/
+
 ```
 # Create the Service File
 Create a systemd service file using a text editor. This file will define how your service should behave.
@@ -55,7 +57,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=sudo /usr/bin/python3 /opt/btserver.py > /tmp/btserver.log 2>&1 &
+ExecStart=sudo /usr/bin/python3 /opt/btserver.py > /var/log/btserver/btserver.log 2>&1
 Restart=always
 RestartSec=3
 User=root   
