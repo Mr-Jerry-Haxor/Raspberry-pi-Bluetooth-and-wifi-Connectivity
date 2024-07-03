@@ -94,11 +94,11 @@ sudo systemctl status btserver
 
 ## To make it auto connect
 
-# created a new file
+# created a another service file
 ```
 sudo nano /usr/lib/systemd/system/bt-agent
 ```
-# paste all the below code in that file
+paste all the below code in that file
 
 ```
 [Unit]
@@ -118,16 +118,15 @@ WantedBy=bluetooth.target
 Once you've added details, save and close the file by pressing CTRL + X, then Y to confirm the changes, and Enter to exit.
 
 
-# create another fiele
+create another file
 ```
 sudo nano /opt/pin
 ```
-
-# paste below code
+paste below code into the file, save and close the file by pressing CTRL + X, then Y to confirm the changes, and Enter to exit.
 ```
 * *
 ```
-# created a service that would start after reboot
+created a service that would start after reboot
 ```
 sudo systemctl start bt-agent
 ```
@@ -135,12 +134,12 @@ sudo systemctl start bt-agent
 sudo systemctl enable bt-agent
 ```
 
-# now check the status
+now check the status
 ```
 sudo systemctl status bt-agent
 ```
-# if it is working or not, if it shows "active" then it's working , if it shows "failed" then it is  not working 
-# if it is failed run 
+if it is working or not, if it shows "active" then it's working , if it shows "failed" then it is  not working 
+if it is failed run 
 ```
 sudo systemctl daemon-reload
 ```
