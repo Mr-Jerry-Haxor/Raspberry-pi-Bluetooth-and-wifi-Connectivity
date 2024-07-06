@@ -51,6 +51,7 @@ class BLEServer:
     def accept_bluetooth_connection(self):
         self.client_socket, client_info = self.server_socket.accept()
         self.logger.info(f"Accepted bluetooth connection from {client_info}")
+        self.send_data_to_client(f"Bluetooth connection Established")
 
     def receive_data(self):
         data = self.client_socket.recv(1024)
@@ -105,13 +106,23 @@ class BLEServer:
     def receive_process_data(self):
         data = self.receive_data()
         data_obj = self.deserialize_data(data)
-        self.write_to_json_file(data_obj)
         # Check if data contains ssid and password
         if data_obj and "ssid" in data_obj and "password" in data_obj:
             self.append_wifi_details_to_wpa_supplicant(data_obj["ssid"], data_obj["password"])
             self.reconfigure_wifi_interface()
+        elif data_obj and "wifistatus" in data_obj:
+            self.excute_cmd_and_return_data(
+                """sudo nmcli dev wifi | awk '
+BEGIN {print "SSID\t\t\t\t\tConnected Status"} 
+NR==1 {next} 
+$1 == "*" {print $3 "\t\t\t\t\tConnected"} 
+$1 != "*" && $1 != "IN-USE" {print $2 "\t\t\t\t\tNot Connected"} 
+$1 != "*" && $1 == "IN-USE" {print $3 "\t\t\t\t\tNot Connected"}'"""
+                                            )
         elif data_obj and "cmd" in data_obj:
             self.excute_cmd_and_return_data(data_obj["cmd"])
+        elif data_obj and "test" in data_obj:
+            self.logger.log(logging.INFO, "test connection succeeded")
     
     def excute_cmd_and_return_data(self, cmd):
         # send the output to the client
