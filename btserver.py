@@ -138,7 +138,7 @@ $1 != "*" && $1 == "IN-USE" {print $3 "\t\t\t\t\tNot Connected"}'"""
     def append_wifi_details_to_wpa_supplicant(self, ssid, password):
         try:
             # Construct the command with ssid and password
-            command = f'sudo nmcli device wifi connect "{ssid}" password "{password}" ifname wlan0'
+            command = f'sudo nmcli device wifi connect {ssid} password {password} ifname wlan0'
             # Execute the command
             result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             # Log the output
