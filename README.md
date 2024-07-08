@@ -21,16 +21,16 @@ sudo snap install bluez
 
 sudo apt-get install python3-bluez
 
-sudo pip install pybluez
 ```
 
 ## Edit bluetooth config file
 
-You need to run the Bluetooth daemon in 'compatibility' mode. Edit /lib/systemd/system/bluetooth.service and add '-C' after ' <other_data>/bluetoothd'. Reboot.
+You need to run the Bluetooth daemon in 'compatibility' mode. Edit /lib/systemd/system/bluetooth.service and add '-C' after 'ExecStart=/usr/libexec/bluetooth/bluetoothd'. like this "ExecStart=/usr/libexec/bluetooth/bluetoothd -C" and now  Reboot Raspberry Pi. 
 
 ```
 sudo nano /lib/systemd/system/bluetooth.service
 ```
+save and close the file by pressing CTRL + X, then Y to confirm the changes, and Enter to exit.
 
 ```
 sudo sdptool add SP
@@ -114,7 +114,7 @@ sudo systemctl status btserver
 ## created a another service file
 
 ```
-sudo nano /usr/lib/systemd/system/bt-agent
+sudo nano /usr/lib/systemd/system/bt-agent.service
 ```
 
 paste all the below code in that file
@@ -178,7 +178,7 @@ sudo systemctl restart bt-agent
 
 ### Now Try to connect to the bluetooth of raspberry , it will connect automatically Through the below APP
 
-[Raspberry PI controller APP](https://github.com/Mr-Jerry-Haxor/Raspberry-pi-Bluetooth-and-wifi-Connectivity/releases/download/Raspberry-pi-controller-APP-v1/Raspberry.pi.Controller.apk "Android version")
+[Raspberry PI controller APP](https://github.com/Mr-Jerry-Haxor/Raspberry-pi-Bluetooth-and-wifi-Connectivity/releases/download/Raspberry-pi-controller-APP-v1/Raspberry.pi.Controller.apk)
 
 NOTE: 
 Before using the App , open Bluetooth of your mobile and connect with the Raspberry pi bluetooth.
