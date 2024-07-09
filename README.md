@@ -96,6 +96,11 @@ sudo nano /lib/systemd/system/bluetooth.service
 ```
 save and close the file by pressing CTRL + X, then Y to confirm the changes, and Enter to exit.
 
+Reboot the Raspberry pi
+```
+sudo reboot
+```
+After reboot run the following command.
 ```
 sudo sdptool add SP
 ```
@@ -240,10 +245,17 @@ sudo systemctl daemon-reload
 ```
 sudo systemctl restart bt-agent
 ```
+Reboot the Raspberry pi
+```
+sudo reboot
+```
 
 ### Now Try to connect to the bluetooth of raspberry , it will connect automatically Through the below APP
 
-[Raspberry PI controller APP](https://github.com/Mr-Jerry-Haxor/Raspberry-pi-Bluetooth-and-wifi-Connectivity/releases/download/Raspberry-pi-controller-APP-v1/Raspberry.pi.Controller.apk)
+[Raspberry PI controller APP](https://github.com/Mr-Jerry-Haxor/Raspberry-pi-Bluetooth-and-wifi-Connectivity/releases/download/Raspberry-pi-controller-APP-v1/Raspberry.Pi.controller.v1.5.apk)
+
+OR
+Check realease for latest APK file . 
 
 NOTE: 
 Before using the App , open Bluetooth of your mobile and connect with the Raspberry pi bluetooth.
