@@ -34,7 +34,7 @@ After=bluetooth.service
 [Service]
 Type=oneshot
 ExecStartPre=/bin/sleep 5
-ExecStart=/bin/sh -c '/usr/bin/bluetoothctl power on && /usr/bin/bluetoothctl agent on && /usr/bin/bluetoothctl pairable on && /usr/bin/bluetoothctl discoverable on'
+ExecStart=/bin/sh -c '/usr/bin/bluetoothctl power on && /usr/bin/bluetoothctl pairable on && /usr/bin/bluetoothctl discoverable on'
 RemainAfterExit=yes
 
 [Install]
