@@ -9,6 +9,18 @@ This project is developed to make the Raspberry Pi Bluetooth to auto connect wit
 ```
 sudo rfkill unblock bluetooth
 ```
+Modify Discoverable Timeout 
+```
+sudo nano /etc/bluetooth/main.conf
+```
+uncomment and set value "DiscoverableTimeout = 0" 
+and save and close the file by pressing CTRL + X, then Y to confirm the changes, and Enter to exit.
+
+
+
+next 
+
+
 Create a new service file
 ```
 sudo nano /etc/systemd/system/bluetooth-setup.service
@@ -179,6 +191,7 @@ PartOf=bluetooth.service
 
 [Service]
 Type=simple
+ExecStartPre=/bin/sleep 10
 ExecStart=/usr/bin/bt-agent -c DisplayOnly -p /opt/pin
 Restart=always
 RestartSec=3
