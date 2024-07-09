@@ -142,9 +142,14 @@ $1 != "*" && $1 == "IN-USE" {print $3 "\t\t\t\t\tNot Connected"}'"""
             self.send_data_to_client(f"Failed to execute command: {e.stderr}")
 
     def append_wifi_details_to_networkmanager(self, ssid, password):
+        
         try:
-            # Construct the command with ssid and password
-            command = f'sudo nmcli device wifi connect {ssid} password {password} ifname wlan0'
+            # Check if ssid or password contains spaces and enclose them in quotes if they do
+            ssid_quoted = f'"{ssid}"' if ' ' in ssid else ssid
+            password_quoted = f'"{password}"' if ' ' in password else password
+
+            # Construct the command with possibly quoted ssid and password
+            command = f'sudo nmcli device wifi connect {ssid_quoted} password {password_quoted} ifname wlan0'
             # Execute the command
             result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             # Log the output
