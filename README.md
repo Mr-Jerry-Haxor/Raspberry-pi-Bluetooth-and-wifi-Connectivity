@@ -62,6 +62,8 @@ sudo apt-get install blueman
 
 sudo apt-get install python3-bluez
 
+sudo apt-get install bluez-tools
+
 ```
 need to look installation agent
 ```
