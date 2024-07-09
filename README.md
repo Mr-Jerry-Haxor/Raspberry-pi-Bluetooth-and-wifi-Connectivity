@@ -259,3 +259,4 @@ Check realease for latest APK file .
 
 NOTE: 
 Before using the App , open Bluetooth of your mobile and connect with the Raspberry pi bluetooth.
+USE 2.4GHz wifi band in mobile hotspot, while connecting to mobile hotspot.
