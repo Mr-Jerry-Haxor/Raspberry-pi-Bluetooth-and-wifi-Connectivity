@@ -123,13 +123,7 @@ $1 != "*" && $1 == "IN-USE" {print $3 "\t\t\t\t\tNot Connected"}'"""
             self.excute_cmd_and_return_data(data_obj["cmd"])
         elif data_obj and "wifiscan" in data_obj:
             self.excute_cmd_and_return_data(
-        """sudo nmcli dev wifi | awk '
-BEGIN {print "wifiscan_data"} 
-NR==1 {next} 
-$1 == "*" {print $3 "| Connected"} 
-$1 != "*" && $1 != "IN-USE" {print $2} 
-$1 != "*" && $1 == "IN-USE" {print $3}'
-        """
+        """echo "wifiscan_data" && sudo iw dev wlan0 scan | grep SSID: | cut -d ':' -f 2 | grep -v '^\s*$'"""
             )
         elif data_obj and "reboot" in data_obj:
             self.excute_cmd_and_return_data("sudo reboot")
