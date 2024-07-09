@@ -252,10 +252,12 @@ sudo reboot
 
 ### Now Try to connect to the bluetooth of raspberry , it will connect automatically Through the below APP
 
-[Raspberry PI controller APP](https://github.com/Mr-Jerry-Haxor/Raspberry-pi-Bluetooth-and-wifi-Connectivity/releases/download/Raspberry-pi-controller-APP-v1/Raspberry.Pi.controller.v1.5.apk)
+[Raspberry PI controller APP](https://github.com/Mr-Jerry-Haxor/Raspberry-pi-Bluetooth-and-wifi-Connectivity/releases/download/Raspberry-pi-controller-APP-v1/Raspberry.Pi.controller.v1.apk)
 
 OR
 Check realease for latest APK file . 
+
+https://github.com/Mr-Jerry-Haxor/Raspberry-pi-Bluetooth-and-wifi-Connectivity/releases
 
 NOTE: 
 Before using the App , open Bluetooth of your mobile and connect with the Raspberry pi bluetooth.
