@@ -121,8 +121,23 @@ $1 != "*" && $1 == "IN-USE" {print $3 "\t\t\t\t\tNot Connected"}'"""
                                             )
         elif data_obj and "cmd" in data_obj:
             self.excute_cmd_and_return_data(data_obj["cmd"])
+        elif data_obj and "wifiscan" in data_obj:
+            self.excute_cmd_and_return_data(
+        """sudo nmcli dev wifi | awk '
+BEGIN {print "wifiscan_data"} 
+NR==1 {next} 
+$1 == "*" {print $3 "| Connected"} 
+$1 != "*" && $1 != "IN-USE" {print $2} 
+$1 != "*" && $1 == "IN-USE" {print $3}'
+        """
+            )
+        elif data_obj and "reboot" in data_obj:
+            self.excute_cmd_and_return_data("sudo reboot")
+        elif data_obj and "shutdown" in data_obj:
+            self.excute_cmd_and_return_data("sudo shutdown -h now")
         elif data_obj and "test" in data_obj:
             self.logger.log(logging.INFO, "test connection succeeded")
+            
     
     def excute_cmd_and_return_data(self, cmd):
         # send the output to the client
