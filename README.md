@@ -77,15 +77,7 @@ sudo apt-get install python3-bluez
 sudo apt-get install bluez-tools
 
 ```
-need to look installation agent
-```
-sudo apt-get install bluez-utils
 
-sudo apt install snapd
-
-sudo snap install bluez
-
-```
 
 ## Edit bluetooth config file
 
