@@ -4,6 +4,51 @@ This project is developed to make the Raspberry Pi Bluetooth to auto connect wit
 
 # Pre-quisites
 
+## Bluetooth power on and make it discoverable 
+
+```
+sudo rfkill unblock bluetooth
+```
+Create a new service file
+```
+sudo nano /etc/systemd/system/bluetooth-setup.service
+```
+paste the below script , save and close the file by pressing CTRL + X, then Y to confirm the changes, and Enter to exit.
+```
+[Unit]
+Description=Bluetooth Setup Service
+After=bluetooth.service
+
+[Service]
+Type=oneshot
+ExecStartPre=/bin/sleep 5
+ExecStart=/bin/sh -c '/usr/bin/bluetoothctl power on && /usr/bin/bluetoothctl agent on && /usr/bin/bluetoothctl pairable on && /usr/bin/bluetoothctl discoverable on'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+```
+run below commands
+```
+sudo chmod 644 /etc/systemd/system/bluetooth-setup.service
+
+sudo systemctl daemon-reload
+
+sudo systemctl enable bluetooth-setup.service
+```
+Reboot the Raspberry pi
+```
+sudo reboot
+```
+
+
+Turn on Bluetooth  on boot
+```
+sudo systemctl start bluetooth
+
+sudo systemctl enable bluetooth
+```
+
 This python-script uses Bluez, Linux's Bluetooth protocol stack, we'll be using PyBluez, a Python API for accessing the bluetooth resources using the bluez protocol.
 
 Installation
@@ -13,13 +58,18 @@ sudo apt-get install python3-pip python3-dev ipython3
 
 sudo apt-get install bluetooth libbluetooth-dev
 
-sudo apt-get install bluez-utils blueman
+sudo apt-get install blueman
+
+sudo apt-get install python3-bluez
+
+```
+need to look installation agent
+```
+sudo apt-get install bluez-utils
 
 sudo apt install snapd
 
 sudo snap install bluez
-
-sudo apt-get install python3-bluez
 
 ```
 
