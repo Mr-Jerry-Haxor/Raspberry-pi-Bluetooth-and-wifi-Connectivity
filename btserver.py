@@ -61,6 +61,7 @@ class BLEServer:
 
     def deserialize_data(self, data):
         if data:
+            print(data)
             try:
                 # Decode data from bytes to string before JSON deserialization
                 data_str = data.decode('utf-8')
@@ -109,7 +110,6 @@ class BLEServer:
         # Check if data contains ssid and password
         if data_obj and "ssid" in data_obj and "password" in data_obj:
             self.append_wifi_details_to_networkmanager(data_obj["ssid"], data_obj["password"])
-            self.reconfigure_wifi_interface()
         elif data_obj and "wifistatus" in data_obj:
             self.excute_cmd_and_return_data(
                 """sudo nmcli dev wifi | awk '
@@ -144,11 +144,8 @@ $1 != "*" && $1 == "IN-USE" {print $3}'
         try:
             output = subprocess.check_output(cmd, shell=True)
             self.send_data_to_client(output.decode('utf-8'))
-            #self.logger.log(logging.INFO, f"Command executed successfully: {cmd}")
-            #self.logger.log(logging.INFO, f"Output: {output.decode('utf-8')}")
         except subprocess.CalledProcessError as e:
-            #self.logger.error(f"Failed to execute command: {e}", exc_info=True)
-            self.send_data_to_client(f"Failed to execute command: {e}")
+            self.send_data_to_client(f"Failed to execute command: {e.stderr}")
 
     def append_wifi_details_to_networkmanager(self, ssid, password):
         try:
@@ -160,9 +157,7 @@ $1 != "*" && $1 == "IN-USE" {print $3}'
             #self.logger.info(f"Command output: {result.stdout}")
             self.send_data_to_client(f"Wi-Fi connected successfully to {ssid}.\nCommand output: {result.stdout}")
         except subprocess.CalledProcessError as e:
-            # Log the error
-            #self.logger.error(f"Command failed: {e.stderr}")
-            self.send_data_to_client("Failed to connect to Wi-Fi.\nCommand failed: {e.stderr}")
+                    self.send_data_to_client(f"Failed to connect to Wi-Fi.\nCommand failed: {e.stderr}")
 
 
     def stop(self):
