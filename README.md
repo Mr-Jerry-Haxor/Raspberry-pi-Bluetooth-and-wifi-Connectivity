@@ -97,6 +97,11 @@ After reboot run the following command.
 sudo sdptool add SP
 ```
 
+Reset adaptor
+```
+sudo hciconfig -a hci0 reset
+```
+
 ## Bluetooth SERVER code
 
 ```
