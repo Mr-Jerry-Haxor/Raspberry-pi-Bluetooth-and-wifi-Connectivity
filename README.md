@@ -193,7 +193,7 @@ PartOf=bluetooth.service
 
 [Service]
 Type=simple
-ExecStartPre=/bin/sleep 10
+ExecStartPre=/bin/sleep 30
 ExecStart=/usr/bin/bt-agent -c DisplayOnly -p /opt/pin
 Restart=always
 RestartSec=3
